@@ -7,6 +7,7 @@ import com.devinhouse.devinpharmacy.model.dto.FarmaciaResponseDTO;
 import com.devinhouse.devinpharmacy.model.dto.MedicamentoRequestDTO;
 import com.devinhouse.devinpharmacy.model.dto.MedicamentoResponseDTO;
 import com.devinhouse.devinpharmacy.repository.FarmaciaRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ public class FarmaciaService {
     @Autowired
     private FarmaciaRepository farmaciaRepository;
 
+    @Transactional
     public FarmaciaResponseDTO create(FarmaciaRequestDTO body){
         Farmacia newFarmacia = this.farmaciaRepository.save(new Farmacia(body));
         return new FarmaciaResponseDTO(newFarmacia);

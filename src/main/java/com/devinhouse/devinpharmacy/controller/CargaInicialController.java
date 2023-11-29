@@ -2,9 +2,11 @@ package com.devinhouse.devinpharmacy.controller;
 
 import com.devinhouse.devinpharmacy.model.Medicamento;
 import com.devinhouse.devinpharmacy.model.dto.EnderecoRequestDTO;
+import com.devinhouse.devinpharmacy.model.dto.EstoqueRequestDTO;
 import com.devinhouse.devinpharmacy.model.dto.FarmaciaRequestDTO;
 import com.devinhouse.devinpharmacy.model.dto.MedicamentoRequestDTO;
 import com.devinhouse.devinpharmacy.model.enums.TipoMedicamento;
+import com.devinhouse.devinpharmacy.service.EstoqueService;
 import com.devinhouse.devinpharmacy.service.FarmaciaService;
 import com.devinhouse.devinpharmacy.service.MedicamenteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class CargaInicialController {
 
     @Autowired
     private FarmaciaService farmaciaService;
+
+    @Autowired
+    private EstoqueService estoqueService;
 
     @PostMapping
     public ResponseEntity<?> cargaInicial(){
@@ -45,7 +50,7 @@ public class CargaInicialController {
         }
 
         var farmacias = farmaciaService.listAll();
-       // if(farmacias.isEmpty()){
+        if(farmacias.isEmpty()){
 
             EnderecoRequestDTO enderecoRequest1 = new EnderecoRequestDTO(88888999L, "Rua Porto Real", 67, "Westeros", "Berlim", "SC", "", 15.23456,  2.8678687);
             FarmaciaRequestDTO farRequest1 = new FarmaciaRequestDTO(90561736000121L, "DevMed Ltda", "Farmácia DevMed", "devmed@farmacia.com", "(44)4444-4444", "(44)9444-4441", enderecoRequest1);
@@ -55,7 +60,28 @@ public class CargaInicialController {
 
             farmaciaService.create(farRequest1);
             farmaciaService.create(farRequest2);
-        //}
+        }
+
+        var estoque = estoqueService.listAll();
+     //   if(estoque.isEmpty()){
+
+            EstoqueRequestDTO estoqueRequest1 = new EstoqueRequestDTO(90561736000121L, 1010, 12);
+            EstoqueRequestDTO estoqueRequest2 = new EstoqueRequestDTO(90561736000121L, 7473, 10);
+            EstoqueRequestDTO estoqueRequest3 = new EstoqueRequestDTO(43178995000198L, 7473, 2);
+            EstoqueRequestDTO estoqueRequest4 = new EstoqueRequestDTO(43178995000198L, 2233, 15);
+            EstoqueRequestDTO estoqueRequest5 = new EstoqueRequestDTO(43178995000198L, 8880, 16);
+            EstoqueRequestDTO estoqueRequest6 = new EstoqueRequestDTO(43178995000198L, 4040, 22);
+
+            estoqueService.create(estoqueRequest1);
+            estoqueService.create(estoqueRequest2);
+            estoqueService.create(estoqueRequest3);
+            estoqueService.create(estoqueRequest4);
+            estoqueService.create(estoqueRequest5);
+            estoqueService.create(estoqueRequest6);
+      //  }
+
+
+
         return ResponseEntity.ok().build();
     }
 }
