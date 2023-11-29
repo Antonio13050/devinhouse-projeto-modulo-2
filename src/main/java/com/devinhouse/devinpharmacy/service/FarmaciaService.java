@@ -1,11 +1,9 @@
 package com.devinhouse.devinpharmacy.service;
 
+import com.devinhouse.devinpharmacy.exception.RegistroNaoEncontradoException;
 import com.devinhouse.devinpharmacy.model.Farmacia;
-import com.devinhouse.devinpharmacy.model.Medicamento;
 import com.devinhouse.devinpharmacy.model.dto.FarmaciaRequestDTO;
 import com.devinhouse.devinpharmacy.model.dto.FarmaciaResponseDTO;
-import com.devinhouse.devinpharmacy.model.dto.MedicamentoRequestDTO;
-import com.devinhouse.devinpharmacy.model.dto.MedicamentoResponseDTO;
 import com.devinhouse.devinpharmacy.repository.FarmaciaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +26,10 @@ public class FarmaciaService {
     public List<FarmaciaResponseDTO> listAll(){
         List<Farmacia> farmacias = this.farmaciaRepository.findAll();
         return farmacias.stream().map(FarmaciaResponseDTO::new).toList();
+    }
+
+    public FarmaciaResponseDTO cosultarPorCnpj(Long cnpj){
+        return this.farmaciaRepository.findById(cnpj).map(FarmaciaResponseDTO::new)
+                .orElseThrow(() -> new RegistroNaoEncontradoException("de farmacia", cnpj));
     }
 }
