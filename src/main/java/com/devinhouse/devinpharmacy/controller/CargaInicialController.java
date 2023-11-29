@@ -1,10 +1,14 @@
 package com.devinhouse.devinpharmacy.controller;
 
 import com.devinhouse.devinpharmacy.model.Medicamento;
+import com.devinhouse.devinpharmacy.model.dto.EnderecoRequestDTO;
+import com.devinhouse.devinpharmacy.model.dto.FarmaciaRequestDTO;
 import com.devinhouse.devinpharmacy.model.dto.MedicamentoRequestDTO;
 import com.devinhouse.devinpharmacy.model.enums.TipoMedicamento;
+import com.devinhouse.devinpharmacy.service.FarmaciaService;
 import com.devinhouse.devinpharmacy.service.MedicamenteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +21,9 @@ public class CargaInicialController {
 
     @Autowired
     private MedicamenteService medicamenteService;
+
+    @Autowired
+    private FarmaciaService farmaciaService;
 
     @PostMapping
     public ResponseEntity<?> cargaInicial(){
@@ -34,7 +41,15 @@ public class CargaInicialController {
             medicamenteService.create(medRequest3);
             medicamenteService.create(medRequest4);
             medicamenteService.create(medRequest5);
+        }
 
+        var farmacias = farmaciaService.listAll();
+        if(farmacias.isEmpty()){
+
+            EnderecoRequestDTO enderecoRequest1 = new EnderecoRequestDTO(88888999L, "Rua Porto Real", 67, "Westeros", "Berlim", "SC", "", 15.23456,  2.8678687);
+            FarmaciaRequestDTO farRequest1 = new FarmaciaRequestDTO(90561736000121L, "DevMed Ltda", "Farmácia DevMed", "devmed@farmacia.com", "(44)4444-4444", "(44)9444-4441", enderecoRequest1);
+
+            farmaciaService.create(farRequest1);
         }
         return ResponseEntity.ok().build();
     }
