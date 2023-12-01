@@ -1,5 +1,6 @@
 package com.devinhouse.devinpharmacy.service;
 
+import com.devinhouse.devinpharmacy.exception.RegistroJaExistenteException;
 import com.devinhouse.devinpharmacy.exception.RegistroNaoEncontradoException;
 import com.devinhouse.devinpharmacy.model.Farmacia;
 import com.devinhouse.devinpharmacy.model.dto.FarmaciaRequestDTO;
@@ -19,6 +20,10 @@ public class FarmaciaService {
 
     @Transactional
     public FarmaciaResponseDTO create(FarmaciaRequestDTO body){
+        boolean existe = farmaciaRepository.existsById(body.cnpj());
+        if(existe){
+            throw new RegistroJaExistenteException("Farmacia", body.cnpj());
+        }
         Farmacia newFarmacia = this.farmaciaRepository.save(new Farmacia(body));
         return new FarmaciaResponseDTO(newFarmacia);
     }
