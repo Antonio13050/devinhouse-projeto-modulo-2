@@ -1,11 +1,11 @@
 package com.devinhouse.devinpharmacy.model;
 
-import com.devinhouse.devinpharmacy.model.dto.EnderecoRequestDTO;
 import com.devinhouse.devinpharmacy.model.dto.FarmaciaRequestDTO;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.Valid;
 
 @Entity
 @Table(name = "FARMACIAS")
@@ -17,6 +17,7 @@ public class Farmacia {
     private String email;
     private String telefone;
     private String celular;
+
     @Embedded
     private Endereco endereco;
 

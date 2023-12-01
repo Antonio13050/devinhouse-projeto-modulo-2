@@ -2,6 +2,7 @@ package com.devinhouse.devinpharmacy.model;
 
 import com.devinhouse.devinpharmacy.model.dto.EnderecoRequestDTO;
 import jakarta.persistence.Embeddable;
+import jakarta.validation.constraints.NotNull;
 
 @Embeddable
 public class Endereco {
@@ -14,6 +15,7 @@ public class Endereco {
     private String estado;
     private String complemento;
     private Double latitude;
+
     private Double longitude;
 
     public Endereco() {
