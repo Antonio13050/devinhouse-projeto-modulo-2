@@ -1,7 +1,5 @@
 package com.devinhouse.devinpharmacy.controller;
 
-import com.devinhouse.devinpharmacy.model.dto.FarmaciaRequestDTO;
-import com.devinhouse.devinpharmacy.model.dto.FarmaciaResponseDTO;
 import com.devinhouse.devinpharmacy.model.dto.MedicamentoRequestDTO;
 import com.devinhouse.devinpharmacy.model.dto.MedicamentoResponseDTO;
 import com.devinhouse.devinpharmacy.service.MedicamenteService;

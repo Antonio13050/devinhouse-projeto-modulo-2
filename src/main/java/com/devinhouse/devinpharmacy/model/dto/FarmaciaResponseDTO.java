@@ -1,8 +1,6 @@
 package com.devinhouse.devinpharmacy.model.dto;
 
-import com.devinhouse.devinpharmacy.model.Endereco;
 import com.devinhouse.devinpharmacy.model.Farmacia;
-import jakarta.persistence.Embedded;
 
 public record FarmaciaResponseDTO(Long cnpj, String razaoSocial, String nomeFantasia, String email, String telefone, String celular, EnderecoResponseDTO endereco) {
     public FarmaciaResponseDTO(Farmacia farmacia){

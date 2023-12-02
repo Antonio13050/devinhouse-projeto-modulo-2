@@ -1,6 +1,5 @@
 package com.devinhouse.devinpharmacy.controller;
 
-import com.devinhouse.devinpharmacy.model.Medicamento;
 import com.devinhouse.devinpharmacy.model.dto.EnderecoRequestDTO;
 import com.devinhouse.devinpharmacy.model.dto.EstoqueRequestDTO;
 import com.devinhouse.devinpharmacy.model.dto.FarmaciaRequestDTO;
@@ -10,9 +9,7 @@ import com.devinhouse.devinpharmacy.service.EstoqueService;
 import com.devinhouse.devinpharmacy.service.FarmaciaService;
 import com.devinhouse.devinpharmacy.service.MedicamenteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,6 +44,7 @@ public class CargaInicialController {
             medicamenteService.create(medRequest3);
             medicamenteService.create(medRequest4);
             medicamenteService.create(medRequest5);
+            medicamenteService.create(medRequest6);
         }
 
         var farmacias = farmaciaService.listAll();
@@ -63,7 +61,7 @@ public class CargaInicialController {
         }
 
         var estoque = estoqueService.listAll();
-     //   if(estoque.isEmpty()){
+        if(estoque.isEmpty()){
 
             EstoqueRequestDTO estoqueRequest1 = new EstoqueRequestDTO(90561736000121L, 1010, 12);
             EstoqueRequestDTO estoqueRequest2 = new EstoqueRequestDTO(90561736000121L, 7473, 10);
@@ -78,7 +76,7 @@ public class CargaInicialController {
             estoqueService.create(estoqueRequest4);
             estoqueService.create(estoqueRequest5);
             estoqueService.create(estoqueRequest6);
-      //  }
+        }
 
 
 

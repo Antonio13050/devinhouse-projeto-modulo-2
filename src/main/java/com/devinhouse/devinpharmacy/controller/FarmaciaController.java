@@ -1,6 +1,5 @@
 package com.devinhouse.devinpharmacy.controller;
 
-import com.devinhouse.devinpharmacy.model.Farmacia;
 import com.devinhouse.devinpharmacy.model.dto.FarmaciaRequestDTO;
 import com.devinhouse.devinpharmacy.model.dto.FarmaciaResponseDTO;
 import com.devinhouse.devinpharmacy.service.FarmaciaService;
@@ -8,7 +7,6 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

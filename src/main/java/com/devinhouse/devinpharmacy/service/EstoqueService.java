@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EstoqueService {
@@ -19,15 +20,46 @@ public class EstoqueService {
     @Autowired
     private EstoqueRepository estoqueRepository;
 
+    @Autowired
+    private MedicamenteService medicamenteService;
+
+    @Autowired
+    private FarmaciaService farmaciaService;
+
     @Transactional
     public EstoqueResponseDTO create(EstoqueRequestDTO body){
         Estoque newEstoque = this.estoqueRepository.save(new Estoque(body));
-        return new EstoqueResponseDTO(newEstoque);
+        EstoqueResponseDTO estoqueResponseDTO = convertToDTO(newEstoque);
+        return estoqueResponseDTO;
     }
 
     public List<EstoqueResponseDTO> listAll(){
     List<Estoque> estoque = this.estoqueRepository.findAll();
-    return estoque.stream().map(EstoqueResponseDTO::new).toList();
+    return estoque.stream().map(this::convertToDTO)
+            .collect(Collectors.toList());
+    }
+
+    public List<EstoqueResponseDTO> listAllPorCnpj(Long cnpj){
+
+        //verifica se possui farmacia cadastrada com cnpj informado
+        farmaciaService.cosultarPorCnpj(cnpj);
+
+        List<Estoque> estoque = estoqueRepository.findByCnpj(cnpj);
+        return estoque.stream().map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    private EstoqueResponseDTO convertToDTO(Estoque estoque) {
+        EstoqueResponseDTO estoqueResponseDTO = new EstoqueResponseDTO();
+
+        String nome = medicamenteService.buscarNomeMedicamento(estoque.getNroRegistro());
+
+        estoqueResponseDTO.setNroRegistro(estoque.getNroRegistro());
+        estoqueResponseDTO.setNome(nome);
+        estoqueResponseDTO.setQuantidade(estoque.getQuantidade());
+        estoqueResponseDTO.setDataAtualizacao(estoque.getDataAtualizacao());
+
+        return estoqueResponseDTO;
     }
 }
 

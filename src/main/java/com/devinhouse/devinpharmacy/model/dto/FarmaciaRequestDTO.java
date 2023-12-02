@@ -1,6 +1,5 @@
 package com.devinhouse.devinpharmacy.model.dto;
 
-import com.devinhouse.devinpharmacy.model.Endereco;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
