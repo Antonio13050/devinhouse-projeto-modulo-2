@@ -45,6 +45,9 @@ public class EstoqueService {
     @Transactional
     public EstoqueResponseCadastroEAtualizacaoDTO atualiza(EstoqueRequestDTO body){
 
+        farmaciaService.cosultarPorCnpj(body.cnpj());
+        medicamenteService.consultarPorNroRegistro(body.nroRegistro());
+
         Estoque registroDeEstoque = estoqueRepository.findByCnpjAndNroRegistro(body.cnpj(), body.nroRegistro());
 
         registroDeEstoque.setDataAtualizacao(LocalDateTime.now());
