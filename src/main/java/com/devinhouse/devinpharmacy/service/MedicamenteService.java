@@ -43,4 +43,8 @@ public class MedicamenteService {
         return nome;
     }
 
+    public MedicamentoResponseDTO consultarPorNroRegistro(Integer nroRegistro){
+        return this.medicamentoRepository.findById(nroRegistro).map(MedicamentoResponseDTO::new)
+                .orElseThrow(() -> new RegistroNaoEncontradoException("de medicamento", nroRegistro));
+    }
  }

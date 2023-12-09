@@ -26,6 +26,10 @@ public class EstoqueService {
 
     @Transactional
     public EstoqueResponseCadastroDTO create(EstoqueRequestDTO body) {
+
+        farmaciaService.cosultarPorCnpj(body.cnpj());
+        medicamenteService.consultarPorNroRegistro(body.nroRegistro());
+
         Estoque newEstoque = this.estoqueRepository.save(new Estoque(body));
         return new EstoqueResponseCadastroDTO(newEstoque);
     }
