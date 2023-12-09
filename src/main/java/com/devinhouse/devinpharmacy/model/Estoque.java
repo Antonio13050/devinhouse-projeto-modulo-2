@@ -42,7 +42,15 @@ public class Estoque {
         return quantidade;
     }
 
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
+    }
+
     public LocalDateTime getDataAtualizacao() {
         return dataAtualizacao;
+    }
+
+    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
     }
 }

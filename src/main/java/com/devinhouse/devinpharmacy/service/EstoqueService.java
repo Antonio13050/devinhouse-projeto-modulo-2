@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,8 +31,17 @@ public class EstoqueService {
         farmaciaService.cosultarPorCnpj(body.cnpj());
         medicamenteService.consultarPorNroRegistro(body.nroRegistro());
 
-        Estoque newEstoque = this.estoqueRepository.save(new Estoque(body));
-        return new EstoqueResponseCadastroDTO(newEstoque);
+        Estoque registroExistente = estoqueRepository.findByCnpjAndNroRegistro(body.cnpj(), body.nroRegistro());
+
+        if (registroExistente == null){
+            Estoque newEstoque = this.estoqueRepository.save(new Estoque(body));
+            return new EstoqueResponseCadastroDTO(newEstoque);
+        }
+
+        registroExistente.setDataAtualizacao(LocalDateTime.now());
+        registroExistente.setQuantidade(registroExistente.getQuantidade() + body.quantidade());
+
+        return new EstoqueResponseCadastroDTO(registroExistente);
     }
 
     public List<EstoqueResponseDTO> listAll(){

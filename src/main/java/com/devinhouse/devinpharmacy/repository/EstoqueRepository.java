@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface EstoqueRepository extends JpaRepository<Estoque, IdEstoque> {
     List<Estoque> findByCnpj(Long cnpj);
+    Estoque findByCnpjAndNroRegistro(Long cnpj, Integer nroRegistro);
 }
