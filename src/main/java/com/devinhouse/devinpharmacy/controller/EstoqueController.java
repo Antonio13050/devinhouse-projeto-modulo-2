@@ -30,8 +30,14 @@ public class EstoqueController {
     }
 
     @PostMapping
-    public ResponseEntity<EstoqueResponseCadastroDTO> create(@RequestBody @Valid EstoqueRequestDTO body){
-        EstoqueResponseCadastroDTO response = this.estoqueService.create(body);
+    public ResponseEntity<EstoqueResponseCadastroEAtualizacaoDTO> create(@RequestBody @Valid EstoqueRequestDTO body){
+        EstoqueResponseCadastroEAtualizacaoDTO response = this.estoqueService.create(body);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<EstoqueResponseCadastroEAtualizacaoDTO> atualizar(@RequestBody @Valid EstoqueRequestDTO body){
+        EstoqueResponseCadastroEAtualizacaoDTO response = this.estoqueService.atualiza(body);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

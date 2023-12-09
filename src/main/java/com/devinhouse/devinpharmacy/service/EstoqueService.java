@@ -1,8 +1,6 @@
 package com.devinhouse.devinpharmacy.service;
 
-import com.devinhouse.devinpharmacy.exception.RegistroJaExistenteException;
 import com.devinhouse.devinpharmacy.model.Estoque;
-import com.devinhouse.devinpharmacy.model.Farmacia;
 import com.devinhouse.devinpharmacy.model.dto.*;
 import com.devinhouse.devinpharmacy.repository.EstoqueRepository;
 import jakarta.transaction.Transactional;
@@ -26,7 +24,7 @@ public class EstoqueService {
     private FarmaciaService farmaciaService;
 
     @Transactional
-    public EstoqueResponseCadastroDTO create(EstoqueRequestDTO body) {
+    public EstoqueResponseCadastroEAtualizacaoDTO create(EstoqueRequestDTO body) {
 
         farmaciaService.cosultarPorCnpj(body.cnpj());
         medicamenteService.consultarPorNroRegistro(body.nroRegistro());
@@ -35,13 +33,24 @@ public class EstoqueService {
 
         if (registroExistente == null){
             Estoque newEstoque = this.estoqueRepository.save(new Estoque(body));
-            return new EstoqueResponseCadastroDTO(newEstoque);
+            return new EstoqueResponseCadastroEAtualizacaoDTO(newEstoque);
         }
 
         registroExistente.setDataAtualizacao(LocalDateTime.now());
         registroExistente.setQuantidade(registroExistente.getQuantidade() + body.quantidade());
 
-        return new EstoqueResponseCadastroDTO(registroExistente);
+        return new EstoqueResponseCadastroEAtualizacaoDTO(registroExistente);
+    }
+
+    @Transactional
+    public EstoqueResponseCadastroEAtualizacaoDTO atualiza(EstoqueRequestDTO body){
+
+        Estoque registroDeEstoque = estoqueRepository.findByCnpjAndNroRegistro(body.cnpj(), body.nroRegistro());
+
+        registroDeEstoque.setDataAtualizacao(LocalDateTime.now());
+        registroDeEstoque.setQuantidade(registroDeEstoque.getQuantidade() - body.quantidade());
+
+        return new EstoqueResponseCadastroEAtualizacaoDTO(registroDeEstoque);
     }
 
     public List<EstoqueResponseDTO> listAll(){
