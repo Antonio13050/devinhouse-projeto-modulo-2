@@ -1,11 +1,9 @@
 package com.devinhouse.devinpharmacy.service;
 
+import com.devinhouse.devinpharmacy.exception.RegistroJaExistenteException;
 import com.devinhouse.devinpharmacy.model.Estoque;
 import com.devinhouse.devinpharmacy.model.Farmacia;
-import com.devinhouse.devinpharmacy.model.dto.EstoqueRequestDTO;
-import com.devinhouse.devinpharmacy.model.dto.EstoqueResponseDTO;
-import com.devinhouse.devinpharmacy.model.dto.FarmaciaRequestDTO;
-import com.devinhouse.devinpharmacy.model.dto.FarmaciaResponseDTO;
+import com.devinhouse.devinpharmacy.model.dto.*;
 import com.devinhouse.devinpharmacy.repository.EstoqueRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +25,9 @@ public class EstoqueService {
     private FarmaciaService farmaciaService;
 
     @Transactional
-    public EstoqueResponseDTO create(EstoqueRequestDTO body){
+    public EstoqueResponseCadastroDTO create(EstoqueRequestDTO body) {
         Estoque newEstoque = this.estoqueRepository.save(new Estoque(body));
-        EstoqueResponseDTO estoqueResponseDTO = convertToDTO(newEstoque);
-        return estoqueResponseDTO;
+        return new EstoqueResponseCadastroDTO(newEstoque);
     }
 
     public List<EstoqueResponseDTO> listAll(){
