@@ -61,18 +61,18 @@ public class EstoqueService {
             throw new QuantidadeInformadaMaiorQueQuantidadeEmEstoqueException("quantidade", registroDeEstoque.getQuantidade());
         }
 
-//        if (registroDeEstoque.getQuantidade() - body.quantidade() == 0){
-//
-//            //atualiza data e hora
-//            registroDeEstoque.setDataAtualizacao(LocalDateTime.now());
-//            //atualiza quantidade
-//            registroDeEstoque.setQuantidade(registroDeEstoque.getQuantidade() - body.quantidade());
-//
-//            EstoqueResponseCadastroEAtualizacaoDTO newEstoqueResponseCadastroEAtualizacaoDTO = new EstoqueResponseCadastroEAtualizacaoDTO(registroDeEstoque);
-//            estoqueRepository.delete(registroDeEstoque);
-//            return newEstoqueResponseCadastroEAtualizacaoDTO;
-//
-//        }
+        if (registroDeEstoque.getQuantidade() - body.quantidade() == 0){
+
+            //atualiza data e hora
+            registroDeEstoque.setDataAtualizacao(LocalDateTime.now());
+            //atualiza quantidade
+            registroDeEstoque.setQuantidade(registroDeEstoque.getQuantidade() - body.quantidade());
+
+            EstoqueResponseCadastroEAtualizacaoDTO newEstoqueResponseCadastroEAtualizacaoDTO = new EstoqueResponseCadastroEAtualizacaoDTO(registroDeEstoque);
+            estoqueRepository.delete(registroDeEstoque);
+            return newEstoqueResponseCadastroEAtualizacaoDTO;
+
+        }
         //atualiza data e hora
         registroDeEstoque.setDataAtualizacao(LocalDateTime.now());
         //atualiza quantidade
