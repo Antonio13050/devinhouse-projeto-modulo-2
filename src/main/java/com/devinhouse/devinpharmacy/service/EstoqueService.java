@@ -45,6 +45,15 @@ public class EstoqueService {
     }
 
     @Transactional
+    public TrocaEstoqueResponseDTO trocaDeMedicamentos(TrocaEstoqueRequestDTO body){
+
+        Estoque estoqueOrigem = estoqueRepository.findByCnpjAndNroRegistro(body.cnpjOrigem(), body.nroRegistro());
+        Estoque estoqueDestino = estoqueRepository.findByCnpjAndNroRegistro(body.cnpjDestino(), body.nroRegistro());
+
+        return new TrocaEstoqueResponseDTO(estoqueOrigem, estoqueDestino);
+    }
+
+    @Transactional
     public EstoqueResponseCadastroEAtualizacaoDTO atualiza(EstoqueRequestDTO body){
 
         farmaciaService.cosultarPorCnpj(body.cnpj());

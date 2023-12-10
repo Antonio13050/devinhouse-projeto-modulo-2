@@ -40,4 +40,10 @@ public class EstoqueController {
         EstoqueResponseCadastroEAtualizacaoDTO response = this.estoqueService.atualiza(body);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @PutMapping
+    public ResponseEntity<TrocaEstoqueResponseDTO> trocaEntreFarmacias(@RequestBody @Valid TrocaEstoqueRequestDTO body){
+        TrocaEstoqueResponseDTO response = this.estoqueService.trocaDeMedicamentos(body);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }
