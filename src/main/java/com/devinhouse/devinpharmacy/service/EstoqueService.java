@@ -54,6 +54,16 @@ public class EstoqueService {
         Estoque estoqueOrigem = estoqueRepository.findByCnpjAndNroRegistro(body.cnpjOrigem(), body.nroRegistro());
         Estoque estoqueDestino = estoqueRepository.findByCnpjAndNroRegistro(body.cnpjDestino(), body.nroRegistro());
 
+        if (estoqueOrigem == null){
+            String cnpjENroRegistroComoString = "cnpj: " + body.cnpjOrigem() + ", nroRegistro: " + body.nroRegistro();
+            throw new RegistroNaoEncontradoException("de estoque", cnpjENroRegistroComoString);
+        }
+
+        if (estoqueDestino == null){
+            String cnpjENroRegistroComoString = "cnpj: " + body.cnpjDestino() + ", nroRegistro: " + body.nroRegistro();
+            throw new RegistroNaoEncontradoException("de estoque", cnpjENroRegistroComoString);
+        }
+
         return new TrocaEstoqueResponseDTO(estoqueOrigem, estoqueDestino);
     }
 
