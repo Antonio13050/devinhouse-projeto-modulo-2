@@ -56,7 +56,9 @@ public class EstoqueService {
             throw new RegistroNaoEncontradoException("de estoque", cnpjENroRegistroComoString);
         }
 
+        //atualiza data e hora
         registroDeEstoque.setDataAtualizacao(LocalDateTime.now());
+        //atualiza quantidade
         registroDeEstoque.setQuantidade(registroDeEstoque.getQuantidade() - body.quantidade());
 
         return new EstoqueResponseCadastroEAtualizacaoDTO(registroDeEstoque);
