@@ -76,7 +76,13 @@ public class EstoqueService {
         estoqueDestino.setDataAtualizacao(LocalDateTime.now());
         estoqueDestino.setQuantidade(estoqueDestino.getQuantidade() + body.quantidade());
 
-        return new TrocaEstoqueResponseDTO(estoqueOrigem, estoqueDestino);
+        TrocaEstoqueResponseDTO trocaEstoqueResponseDTO = new TrocaEstoqueResponseDTO(estoqueOrigem, estoqueDestino);
+
+        if (estoqueOrigem.getQuantidade() == 0){
+            estoqueRepository.delete(estoqueOrigem);
+        }
+
+        return trocaEstoqueResponseDTO;
     }
 
     @Transactional
