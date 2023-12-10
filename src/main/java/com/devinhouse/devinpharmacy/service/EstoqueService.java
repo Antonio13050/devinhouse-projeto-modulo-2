@@ -1,5 +1,6 @@
 package com.devinhouse.devinpharmacy.service;
 
+import com.devinhouse.devinpharmacy.exception.QuantidadeInformadaMaiorQueQuantidadeEmEstoqueException;
 import com.devinhouse.devinpharmacy.exception.RegistroNaoEncontradoException;
 import com.devinhouse.devinpharmacy.model.Estoque;
 import com.devinhouse.devinpharmacy.model.dto.*;
@@ -56,12 +57,29 @@ public class EstoqueService {
             throw new RegistroNaoEncontradoException("de estoque", cnpjENroRegistroComoString);
         }
 
+        if (registroDeEstoque.getQuantidade() - body.quantidade() < 0){
+            throw new QuantidadeInformadaMaiorQueQuantidadeEmEstoqueException("quantidade", registroDeEstoque.getQuantidade());
+        }
+
+//        if (registroDeEstoque.getQuantidade() - body.quantidade() == 0){
+//
+//            //atualiza data e hora
+//            registroDeEstoque.setDataAtualizacao(LocalDateTime.now());
+//            //atualiza quantidade
+//            registroDeEstoque.setQuantidade(registroDeEstoque.getQuantidade() - body.quantidade());
+//
+//            EstoqueResponseCadastroEAtualizacaoDTO newEstoqueResponseCadastroEAtualizacaoDTO = new EstoqueResponseCadastroEAtualizacaoDTO(registroDeEstoque);
+//            estoqueRepository.delete(registroDeEstoque);
+//            return newEstoqueResponseCadastroEAtualizacaoDTO;
+//
+//        }
         //atualiza data e hora
         registroDeEstoque.setDataAtualizacao(LocalDateTime.now());
         //atualiza quantidade
         registroDeEstoque.setQuantidade(registroDeEstoque.getQuantidade() - body.quantidade());
 
         return new EstoqueResponseCadastroEAtualizacaoDTO(registroDeEstoque);
+
     }
 
     public List<EstoqueResponseDTO> listAll(){

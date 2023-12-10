@@ -26,6 +26,13 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
+    @ExceptionHandler(QuantidadeInformadaMaiorQueQuantidadeEmEstoqueException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Object> handleResourceAlreadyRegistered(QuantidadeInformadaMaiorQueQuantidadeEmEstoqueException ex) {
+        ErroResponse error = new ErroResponse(ex.getClass().getSimpleName(), ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
     @ExceptionHandler(RegistroJaExistenteException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Object> handleResourceAlreadyRegistered(RegistroJaExistenteException ex) {
