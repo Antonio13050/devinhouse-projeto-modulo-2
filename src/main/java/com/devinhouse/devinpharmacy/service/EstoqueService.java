@@ -64,6 +64,10 @@ public class EstoqueService {
             throw new RegistroNaoEncontradoException("de estoque", cnpjENroRegistroComoString);
         }
 
+        if (estoqueOrigem.getQuantidade() - body.quantidade() < 0){
+            throw new QuantidadeInformadaMaiorQueQuantidadeEmEstoqueException("quantidade", estoqueOrigem.getQuantidade());
+        }
+
         //atualiza estoque farmacia origem
         estoqueOrigem.setDataAtualizacao(LocalDateTime.now());
         estoqueOrigem.setQuantidade(estoqueOrigem.getQuantidade() - body.quantidade());
