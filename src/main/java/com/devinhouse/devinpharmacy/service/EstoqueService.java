@@ -1,5 +1,6 @@
 package com.devinhouse.devinpharmacy.service;
 
+import com.devinhouse.devinpharmacy.exception.RegistroNaoEncontradoException;
 import com.devinhouse.devinpharmacy.model.Estoque;
 import com.devinhouse.devinpharmacy.model.dto.*;
 import com.devinhouse.devinpharmacy.repository.EstoqueRepository;
@@ -49,6 +50,11 @@ public class EstoqueService {
         medicamenteService.consultarPorNroRegistro(body.nroRegistro());
 
         Estoque registroDeEstoque = estoqueRepository.findByCnpjAndNroRegistro(body.cnpj(), body.nroRegistro());
+
+        if (registroDeEstoque == null){
+            String cnpjENroRegistroComoString = "cnpj: " + body.cnpj() + ", nroRegistro: " + body.nroRegistro();
+            throw new RegistroNaoEncontradoException("de estoque", cnpjENroRegistroComoString);
+        }
 
         registroDeEstoque.setDataAtualizacao(LocalDateTime.now());
         registroDeEstoque.setQuantidade(registroDeEstoque.getQuantidade() - body.quantidade());
