@@ -7,7 +7,7 @@ public record TrocaEstoqueRequestDTO(
         @NotNull Long cnpjOrigem,
         @NotNull Long cnpjDestino,
 
-        @NotNull Integer nroRegistro ,
+        @NotNull Integer nroRegistro,
         @Positive(message = "A quantidade deve ser um número positivo.")
         @NotNull Integer quantidade) {
     }
