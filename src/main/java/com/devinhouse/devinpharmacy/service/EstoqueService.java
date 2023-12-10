@@ -64,6 +64,14 @@ public class EstoqueService {
             throw new RegistroNaoEncontradoException("de estoque", cnpjENroRegistroComoString);
         }
 
+        //atualiza estoque farmacia origem
+        estoqueOrigem.setDataAtualizacao(LocalDateTime.now());
+        estoqueOrigem.setQuantidade(estoqueOrigem.getQuantidade() - body.quantidade());
+
+        //atualiza estoque farmacia destino
+        estoqueDestino.setDataAtualizacao(LocalDateTime.now());
+        estoqueDestino.setQuantidade(estoqueDestino.getQuantidade() + body.quantidade());
+
         return new TrocaEstoqueResponseDTO(estoqueOrigem, estoqueDestino);
     }
 
