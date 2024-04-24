@@ -7,13 +7,9 @@ import java.util.Map;
 
 
 public class ErroResponse {
-
     private String title;
-
     private String message;
-
     private Map<String, String> details;
-
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
     private LocalDateTime timestamp;
 
